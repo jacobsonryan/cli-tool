@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Evinced Accessibility Report</title>
+  <style>
+    .flexGrow {
+      flex-grow: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .code {
+      font-family: monospace;
+    }
+
+    .clickable {
+      cursor: pointer;
+    }
+    .sr-only {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    html {
+      background-color: #f8f9fa;
+      font-family: "Helvetica", "Arial", sans-serif;
+      font-size: 12px;
+      line-height: 30px;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    #header {
+      background-color: #ffffff;
+      width: 100%;
+      height: 80px;
+      margin-bottom: 40px;
+      color: #131516;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    #logo {
+      height: 20px;
+    }
+
+    #logo img {
+      height: 100%;
+      width: auto;
+      margin: 0 20px;
+    }
+
+    #sdkVersion {
+      margin-right: 20px;
+    }
+
+    #content {
+      overflow-x: auto;
+    }
+
+    #table {
+      max-width: 1220px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border: 2px solid #f1f2f5;
+      border-top: none;
+      border-spacing: 0;
+    }
+
+    #table thead {
+      font-size: 12px;
+      height: 45px;
+      color: #ffffff;
+      background-color: #607085;
+    }
+
+    #issuesCount {
+      font-size: 14px;
+      color: #131516;
+      text-align: left;
+      font-weight: normal;
+      padding: 10px;
+      background-color: #ffffff;
+      border: 2px solid #f1f2f5;
+      border-bottom: none;
+    }
+
+    #table thead .top-row th {
+      text-align: left;
+      color: #ffffff;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+
+    #table thead tr.top-row th:first-of-type {
+      text-transform: capitalize;
+    }
+
+    #table th {
+      border: 1px solid #ffffff;
+    }
+
+    #table .top-row th,
+    #table td {
+      padding: 12px 15px;
+      max-width: 215px;
+    }
+
+    #table tbody tr {
+      width: 100%;
+      height: 50px;
+      border: 2px solid #f1f2f5;
+      border-radius: 3px;
+    }
+
+    .top th {
+      width: 73px;
+      text-align: left;
+      color: #131516;
+      background: #ffffff;
+      font-weight: normal;
+      border: 0;
+      padding: 0 10px;
+      line-height: 30px;
+    }
+
+    table a {
+      color: #131516;
+    }
+
+    #tableBody td {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 14px;
+      line-height: 20px;
+      color: #131516;
+      border-bottom: 1px solid #f1f2f5;
+    }
+
+    ul {
+      padding-inline-start: 0px;
+    }
+
+    ul>li>p {
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    ul>li::marker {
+      color: #8392a6;
+    }
+
+    #issueDetailsModal {
+      background-color: rgba(0, 0, 0, 0.4);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      z-index: 900;
+    }
+
+    #issueDetailsModal:not(.hidden) {
+      display: flex;
+    }
+
+    #issueDetailsModal .container {
+      margin-top: 100px;
+      margin-bottom: 100px;
+      max-width: 900px;
+    }
+
+    #modalBody {
+      background: #ffffff;
+      box-shadow: 0px 5px 10px #888888;
+      display: inline-block;
+      color: #131516;
+      border: 1px solid #8392a6;
+      padding: 30px 50px;
+      font-size: 14px;
+      width: 100%;
+      position: relative;
+    }
+
+    #modalCloseButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      margin: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background-color: transparent;
+    }
+
+    #modalCloseButton:hover {
+      background-color: #f1f2f5;
+    }
+
+    #modalCloseButton img {
+      width: 20px;
+      height: 20px;
+    }
+
+    #issueDetailsModal h2 {
+      color: #00615a;
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    .modalComponentContainer {
+      margin-top: 20px;
+    }
+
+    .modalComponentItem {
+      color: #607085;
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    .modalComponentItem span {
+      color: initial;
+      margin-left: 5px;
+    }
+
+    .modalComponentItem a {
+      color: #0c72bb;
+      margin-left: 5px;
+    }
+
+    .modalComponentContainer .code {
+      font-size: 12px;
+    }
+
+    .codeSnippetText {
+      border: 1px solid #8392a6;
+      background-color: #f8f9fa;
+      width: 100%;
+      padding: 20px;
+      margin-top: 10px;
+      word-break: break-all;
+      box-sizing: border-box;
+    }
+
+    td.detailsCell {
+      width: 44px;
+      padding: 0;
+    }
+
+    td>button {
+      padding: 10px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-image: url("data:image/svg+xml;base64,PHN2ZyBpZD0iaWNvX0luZm8iIGRhdGEtbmFtZT0iaWNvIEluZm8iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMzIgMzIiPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzYiIGRhdGEtbmFtZT0iRWxsaXBzZSAzNiIgY3g9IjE2IiBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjZmZmIi8+CiAgPGNpcmNsZSBpZD0iRWxsaXBzZV8yOSIgZGF0YS1uYW1lPSJFbGxpcHNlIDI5IiBjeD0iOC41IiBjeT0iOC41IiByPSI4LjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuNSA3LjUpIiBmaWxsPSJub25lIiBzdHJva2U9IiM4MzkyYTYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzAiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMCIgY3g9IjEiIGN5PSIxIiByPSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNSAxMikiIGZpbGw9IiM4MzkyYTYiLz4KICA8bGluZSBpZD0iTGluZV82NSIgZGF0YS1uYW1lPSJMaW5lIDY1IiB5Mj0iNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYgMTUuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzgzOTJhNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8L3N2Zz4K");
+      border: none;
+      background-position: center;
+    }
+
+    td>button:hover {
+      border: none;
+      padding: 10px;
+      opacity: 0.6;
+      transition: 0.3s;
+      box-shadow: 0 0 0 0.3em #f1f2f5;
+      background-image: url("data:image/svg+xml;base64,PHN2ZyBpZD0iaWNvX0luZm8iIGRhdGEtbmFtZT0iaWNvIEluZm8iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMzIgMzIiPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzYiIGRhdGEtbmFtZT0iRWxsaXBzZSAzNiIgY3g9IjE2IiBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjZjFmMmY1Ii8+CiAgPHBhdGggaWQ9IlBhdGhfNTEiIGRhdGEtbmFtZT0iUGF0aCA1MSIgZD0iTTguNSwwQTguNSw4LjUsMCwxLDEsMCw4LjUsOC41LDguNSwwLDAsMSw4LjUsMFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuNSA3LjUpIiBmaWxsPSJub25lIiBzdHJva2U9IiMwYzcyYmIiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzAiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMCIgY3g9IjEiIGN5PSIxIiByPSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNSAxMikiIGZpbGw9IiMwYzcyYmIiLz4KICA8bGluZSBpZD0iTGluZV82NSIgZGF0YS1uYW1lPSJMaW5lIDY1IiB5Mj0iNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYgMTUuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBjNzJiYiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8L3N2Zz4K");
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header">
+    <div id="logo">
+      <img
+        alt="Powered by Evinced"
+        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMC8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+IAo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYwMCA4MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNjAwIDgwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48Zz48cGF0aCBmaWxsPSIjQjJCMkIyIiBkPSJNMjA0LDcyLjhjMC42LDAuNywwLjksMS40LDAuOSwyLjNjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjloLTQwLjIKCQljLTEsMC0xLjctMC4zLTIuNC0wLjljLTAuNi0wLjYtMC45LTEuNC0wLjktMi40VjQuOWMwLTAuOSwwLjMtMS43LDAuOS0yLjRjMC42LTAuNiwxLjQtMC45LDIuNC0wLjloNDAuMmMwLjksMCwxLjcsMC4zLDIuNCwwLjkKCQljMC42LDAuNiwwLjksMS40LDAuOSwyLjRjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjloLTM2LjZ2MjcuNWgzMS43YzAuOSwwLDEuNywwLjMsMi40LDAuOQoJCWMwLjYsMC42LDAuOSwxLjQsMC45LDIuNGMwLDEtMC4zLDEuNy0wLjksMi4zYy0wLjYsMC42LTEuNCwwLjktMi40LDAuOWgtMzEuN3YyOS44aDM2LjZDMjAyLjYsNzEuOSwyMDMuNCw3Mi4yLDIwNCw3Mi44eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik0yNzguMywyLjRjMC43LDAuNiwxLDEuMywxLDIuMWMwLDAuNS0wLjEsMS4xLTAuMywxLjZsLTI5LjMsNjkuOWMtMC4zLDAuNy0wLjcsMS4yLTEuMywxLjYKCQljLTAuNiwwLjQtMS4yLDAuNi0xLjksMC42Yy0wLjcsMC0xLjMtMC4yLTEuOC0wLjVjLTAuNS0wLjQtMS0wLjktMS4zLTEuNUwyMTQuMyw2LjRjLTAuMi0wLjQtMC4zLTEtMC4zLTEuOGMwLTAuOSwwLjMtMS43LDEtMi4zCgkJYzAuNy0wLjYsMS40LTAuOSwyLjItMC45YzEuNSwwLDIuNiwwLjgsMy4zLDIuNEwyNDYuOCw2N2wyNi02My4zYzAuNC0wLjcsMC44LTEuMiwxLjQtMS42YzAuNS0wLjQsMS4xLTAuNiwxLjctMC42CgkJQzI3Ni44LDEuNSwyNzcuNiwxLjgsMjc4LjMsMi40eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik0yOTkuMSw3Ny4zYy0wLjcsMC43LTEuNSwxLTIuNCwxYy0xLDAtMS44LTAuMy0yLjUtMC45Yy0wLjYtMC42LTAuOS0xLjQtMC45LTIuNVY1YzAtMSwwLjMtMS44LDEtMi41CgkJYzAuNy0wLjYsMS41LTAuOSwyLjUtMC45YzAuOSwwLDEuOCwwLjMsMi40LDFjMC43LDAuNywxLDEuNSwxLDIuNHY2OS45QzMwMC4xLDc1LjksMjk5LjgsNzYuNywyOTkuMSw3Ny4zeiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik0zNzkuMSwyLjVjMC41LDAuNiwwLjgsMS4zLDAuOCwyLjJ2NzAuMWMwLDEuMS0wLjMsMi0xLDIuNmMtMC43LDAuNi0xLjUsMC45LTIuNCwwLjljLTAuNSwwLTEtMC4xLTEuNS0wLjMKCQljLTAuNS0wLjItMC45LTAuNS0xLjItMC44bC00Ny02My4zdjYxLjVjMCwwLjgtMC4zLDEuNS0wLjksMi4xYy0wLjYsMC42LTEuMywwLjktMi4xLDAuOWMtMC45LDAtMS42LTAuMy0yLjItMC45CgkJYy0wLjYtMC42LTAuOS0xLjMtMC45LTIuMVY0LjljMC0xLDAuMy0xLjgsMC45LTIuNGMwLjYtMC42LDEuNC0wLjksMi4yLTAuOWMxLjIsMCwyLDAuNCwyLjYsMS4ybDQ3LjIsNjMuN1Y0LjcKCQljMC0wLjksMC4zLTEuNiwwLjktMi4yYzAuNi0wLjYsMS4zLTAuOSwyLjItMC45QzM3Ny44LDEuNiwzNzguNSwxLjksMzc5LjEsMi41eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik00NTguMSwxMGMwLDAuNy0wLjMsMS40LTAuOCwyLjJjLTAuNywwLjgtMS41LDEuMi0yLjUsMS4yYy0wLjYsMC0xLjItMC4yLTEuOC0wLjUKCQljLTUuOC0zLjktMTIuMi01LjgtMTkuMi01LjhjLTUuOSwwLTExLjMsMS40LTE2LjEsNC4yYy00LjgsMi44LTguNSw2LjctMTEuMywxMS43Yy0yLjcsNS00LjEsMTAuNy00LjEsMTdjMCw2LjUsMS40LDEyLjMsNC4yLDE3LjMKCQljMi44LDUsNi42LDguOSwxMS4zLDExLjZjNC44LDIuNywxMC4xLDQuMSwxNS45LDQuMWM2LjksMCwxMy4zLTEuOSwxOS4xLTUuN2MwLjYtMC40LDEuMi0wLjUsMS45LTAuNWMxLDAsMS45LDAuNCwyLjUsMS4zCgkJYzAuNSwwLjYsMC44LDEuMywwLjgsMi4xYzAsMS4yLTAuNSwyLTEuNSwyLjZjLTIuOCwxLjktNi40LDMuNS0xMC41LDQuOGMtNC4yLDEuMy04LjIsMS45LTEyLjIsMS45Yy02LjksMC0xMy40LTEuNy0xOS4yLTUKCQljLTUuOS0zLjMtMTAuNi04LTE0LTE0Yy0zLjUtNi01LjItMTIuOC01LjItMjAuNWMwLTcuNCwxLjctMTQuMSw1LjItMjAuMWMzLjQtNiw4LjEtMTAuNywxMy45LTE0LjFjNS44LTMuNCwxMi4zLTUuMSwxOS40LTUuMQoJCWM0LjEsMCw4LjEsMC42LDEyLDEuOGMzLjksMS4yLDcuNCwyLjgsMTAuNiw0LjlDNDU3LjYsOCw0NTguMSw4LjksNDU4LjEsMTB6Ij48L3BhdGg+PHBhdGggZmlsbD0iI0IyQjJCMiIgZD0iTTUxNy45LDcyLjhjMC42LDAuNywwLjksMS40LDAuOSwyLjNjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjloLTQwLjIKCQljLTEsMC0xLjctMC4zLTIuNC0wLjljLTAuNi0wLjYtMC45LTEuNC0wLjktMi40VjQuOWMwLTAuOSwwLjMtMS43LDAuOS0yLjRjMC42LTAuNiwxLjQtMC45LDIuNC0wLjloNDAuMmMwLjksMCwxLjcsMC4zLDIuNCwwLjkKCQljMC42LDAuNiwwLjksMS40LDAuOSwyLjRjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjlINDc5djI3LjVoMzEuN2MwLjksMCwxLjcsMC4zLDIuNCwwLjkKCQljMC42LDAuNiwwLjksMS40LDAuOSwyLjRjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjlINDc5djI5LjhoMzYuNkM1MTYuNSw3MS45LDUxNy4zLDcyLjIsNTE3LjksNzIuOHoiPjwvcGF0aD48cGF0aCBmaWxsPSIjQjJCMkIyIiBkPSJNNTgzLjIsNi44YzQuOCwzLjUsOC40LDguMSwxMC43LDEzLjljMi40LDUuOCwzLjYsMTIuMiwzLjYsMTkuMmMwLDcuMi0xLjIsMTMuNy0zLjYsMTkuNQoJCWMtMi40LDUuOC02LDEwLjQtMTAuNywxMy44Yy00LjgsMy40LTEwLjcsNS4xLTE3LjcsNS4xaC0yNy45Yy0xLDAtMS43LTAuMy0yLjQtMC45Yy0wLjYtMC42LTAuOS0xLjQtMC45LTIuNFY0LjkKCQljMC0wLjksMC4zLTEuNywwLjktMi40YzAuNi0wLjYsMS40LTAuOSwyLjQtMC45aDI3LjlDNTcyLjUsMS42LDU3OC40LDMuMyw1ODMuMiw2Ljh6IE01ODQuMSw2M2M0LjMtNS45LDYuNS0xMy42LDYuNS0yMy4xCgkJYzAtNS45LTAuOS0xMS4zLTIuNy0xNi4xYy0xLjgtNC44LTQuNy04LjYtOC42LTExLjVjLTMuOS0yLjktOC44LTQuMy0xNC43LTQuM2gtMjMuMnY2My44aDIzLjJDNTczLjIsNzEuOSw1NzkuNyw2OC45LDU4NC4xLDYzeiI+PC9wYXRoPjwvZz48cmVjdCB4PSIwIiB5PSIwLjMiIHRyYW5zZm9ybT0ibWF0cml4KC0xIC00LjQ5Njc3MWUtMTEgNC40OTY3NzFlLTExIC0xIDc5LjM2NTEgODApIiBmaWxsPSIjOTk5OTk5IiB3aWR0aD0iNzkuNCIgaGVpZ2h0PSI3OS40Ij48L3JlY3Q+PGNpcmNsZSBmaWxsPSIjRkZGRkZGIiBjeD0iNzkuNCIgY3k9IjQwIiByPSIzOS43Ij48L2NpcmNsZT48cGF0aCBmaWxsPSIjNDVDQUFEIiBkPSJNNzkuNCw3OS43YzIxLjksMCwzOS43LTE3LjgsMzkuNy0zOS43UzEwMS4zLDAuMyw3OS40LDAuMyI+PC9wYXRoPjwvc3ZnPgo=" />
+    </div>
+    <div id="reportTitle"></div>
+    <div class="flexGrow"></div>
+    <div id="sdkVersion"></div>
+  </div>
+
+  <div id="issueDetailsModal" role="dialog" aria-dialog="true" class="hidden" tabindex="0">
+    <div class="container">
+      <div id="modalBody">
+        <button
+          id="modalCloseButton"
+          class="clickable"
+          aria-label="hide details"
+          aria-controls="modalBody"
+          tabindex="0"
+          onclick="closeIssueDetailsModal()"
+        >
+          <img
+            aria-hidden="true"
+            src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMC8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+IAo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiM4MzkyYTYiIGQ9Ik0xOSA2LjQxTDE3LjU5IDUgMTIgMTAuNTkgNi40MSA1IDUgNi40MSAxMC41OSAxMiA1IDE3LjU5IDYuNDEgMTkgMTIgMTMuNDEgMTcuNTkgMTkgMTkgMTcuNTkgMTMuNDEgMTJ6Ij48L3BhdGg+PC9zdmc+Cg==" />
+        </button>
+        <p id="selector"></p>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <table id="table">
+        <caption id="issuesCount" scope="col" colspan="8"></caption>
+      <thead>
+        <tr class="top-row">
+          <th scope="col">
+            <span aria-hidden="true">No.</span>
+            <span class="sr-only">Number</span>
+          </th>
+          <th scope="col">Issue Type</th>
+          <th scope="col">Severity</th>
+          <th scope="col">URL</th>
+          <th scope="col">Component</th>
+          <th scope="col">Selector</th>
+          <th scope="col">Code Snippet</th>
+          <th scope="col">WCAG</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    /*
+    jsonData structure:
+    {
+      reportTimestampSec: number
+      sdkVersion: string
+      issues: [
+        knowledgeBaseLink: string
+        summary: string
+        type: {
+          name: string
+        }
+        severity: {
+          name: string
+        }
+        elements: [
+          pageUrl: string
+          componentId: string
+          selector: string
+          domSnippet: string
+        ]
+        tags: [
+          id: string
+          link: string
+        ]
+      ]
+    }
+    */
+    const jsonData = {"issues":[{"id":"6a947b21-086b-4d26-b47d-2c988b855a34","index":"I1","hidden":false,"validation":{"id":"46b0ffc9-17d9-41f9-8492-91338b6a6d96"},"type":{"id":"AXE-ARIA-REQUIRED-ATTR","newId":"f7cdb4cf-cecb-4a4c-82fe-aff49f0c7257","name":"Aria-required-attr"},"elements":[{"id":"d76057e9-623f-4e03-9a7d-61c2ac1116d3","domSnippet":"<input class=\"gLFyf gsfi\" jsaction=\"paste:puy29d;\" maxlength=\"2048\" name=\"q\" type=\"text\" aria-autocomplete=\"both\" aria-haspopup=\"false\" autocapitalize=\"off\" autocomplete=\"off\" autocorrect=\"off\" autofocus=\"\" role=\"combobox\" spellcheck=\"false\" title=\"Search\" value=\"\" aria-label=\"Search\" data-ved=\"0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQ39UDCAY\">","componentId":"27f4926c","index":"S1","selector":".gLFyf","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"aria-required-attr","impact":"critical","tags":["cat.aria","wcag2a","wcag412"],"description":"Ensures elements with ARIA roles have all required ARIA attributes","help":"Required ARIA attributes must be provided","nodes":[{"any":[{"id":"aria-required-attr","data":["aria-expanded"],"relatedNodes":[],"impact":"critical","message":"Required ARIA attribute not present: aria-expanded"}],"all":[],"none":[],"impact":"critical","html":"<input class=\"gLFyf gsfi\" jsaction=\"paste:puy29d;\" maxlength=\"2048\" name=\"q\" type=\"text\" aria-autocomplete=\"both\" aria-haspopup=\"false\" autocapitalize=\"off\" autocomplete=\"off\" autocorrect=\"off\" autofocus=\"\" role=\"combobox\" spellcheck=\"false\" title=\"Search\" value=\"\" aria-label=\"Search\" data-ved=\"0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQ39UDCAY\">","target":[".gLFyf"],"failureSummary":"Fix any of the following:\n  Required ARIA attribute not present: aria-expanded"}]}},"summary":"Required ARIA attributes must be provided","description":"**Description:**\n\tEnsures elements with ARIA roles have all required ARIA attributes\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Required ARIA attribute not present: aria-expanded","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"},{"id":"axe-cat.aria"},{"id":"axe-wcag2a"},{"id":"axe-wcag412"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/aria-required-attr","signature":"0b0eccae"},{"id":"4d65f7af-bac9-4081-917b-b5a8e43432b1","index":"I2","hidden":false,"validation":{"id":"9fee5c00-427d-4f42-b770-8861c8820ff2"},"type":{"id":"AXE-ARIA-VALID-ATTR-VALUE","newId":"329246ca-bbc7-42d4-a990-5c41c93b01e5","name":"Aria-valid-attr-value"},"elements":[{"id":"01917237-4dcb-4132-9bb3-d7d9e31c044d","domSnippet":"<div jsname=\"LgbsSe\" class=\"ayzqOc pHiOh\" aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\" aria-haspopup=\"true\">Settings</div>","componentId":"5a6dd63e","index":"S2","selector":".ayzqOc","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"aria-valid-attr-value","impact":"critical","tags":["cat.aria","wcag2a","wcag412"],"description":"Ensures all ARIA attributes have valid values","help":"ARIA attributes must conform to valid values","nodes":[{"any":[],"all":[{"id":"aria-valid-attr-value","data":["aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\""],"relatedNodes":[],"impact":"critical","message":"Invalid ARIA attribute value: aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\""}],"none":[],"impact":"critical","html":"<div jsname=\"LgbsSe\" class=\"ayzqOc pHiOh\" aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\" aria-haspopup=\"true\">Settings</div>","target":[".ayzqOc"],"failureSummary":"Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\""}]}},"summary":"ARIA attributes must conform to valid values","description":"**Description:**\n\tEnsures all ARIA attributes have valid values\n\t**Failure Summary:**\n\tFix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\"","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"},{"id":"axe-cat.aria"},{"id":"axe-wcag2a"},{"id":"axe-wcag412"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/aria-valid-attr-value","signature":"8fccf59a"},{"id":"303eb8bf-5b68-4614-8493-c7e8962d8e75","index":"I3","hidden":false,"validation":{"id":"a7324b6c-25e2-4bf4-a019-863e65e12746"},"type":{"id":"AXE-COLOR-CONTRAST","newId":"41fbf576-e94e-4a71-ac4d-63f328e3a982","name":"Color-contrast"},"elements":[{"id":"642bce5b-1f7c-48ad-b0e7-ddc5496f76a1","domSnippet":"<a class=\"pHiOh\" href=\"https://www.google.com/intl/en_us/ads/?subid=ww-ww-et-g-awa-a-g_hpafoot1_1!o2&amp;utm_source=google.com&amp;utm_medium=referral&amp;utm_campaign=google_hpafooter&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://www.google.com/intl/en_us/ads/%3Fsubid%3Dww-ww-et-g-awa-a-g_hpafoot1_1!o2%26utm_source%3Dgoogle.com%26utm_medium%3Dreferral%26utm_campaign%3Dgoogle_hpafooter%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQkdQCCA8\">Advertising</a>","componentId":"4b8ec485","index":"S3","selector":".AghGtd > .pHiOh:nth-child(1)","pageUrl":"https://www.google.com/"},{"id":"acacf057-5155-4248-8c3d-e4c36d6f0318","domSnippet":"<!--NOTE: snippet was trimmed due to its size--><div class=\"o3j99 c93Gbe\"><style>.c93Gbe{background:#f2f2f2}.uU7dJb{padding:15px 30px;border-bottom:1px solid #dadce0;font-size:15px;color:#70757a}.SSwjIe{padding:0 20px}.KxwPGc{display:flex;flex-wrap:wrap;justify-content:space-between}@media only screen and (max-width:1200px){.KxwPGc{justify-content:space-evenly}}.pHiOh{display:block;padding:15px;white-space:nowrap}.pHiOh,a.pHiOh{color:#70757a}.ktLKi{white-space:nowrap;vertical-align:top}.Pb9hCb{height:14px;margin-right:6px}.ssOUyb{order:2}@media only screen and (max-width:1200px){.ssOUyb{order:0;width:100%;justify-content:center}}.waLeGd .ssOUyb{order:0;width:100%;justify-content:center}.AghGtd{justify-content:flex-start;min-width:30%;order:1}.iTjxkf{justify-content:flex-end;min-width:30%;order:3}</style><div jscontroller=\"NzU6V\" class=\"KxwPGc SSwjIe\" data-sfe=\"true\" data-sfsw=\"1200\" jsaction=\"rcuQ6b:npT2md\"><div class=\"KxwPGc AghGtd\"></div></div></div>","componentId":"127c4ce4","index":"S4","selector":".c93Gbe","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"color-contrast","impact":"serious","tags":["cat.color","wcag2aa","wcag143"],"description":"Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","help":"Elements must have sufficient color contrast","nodes":[{"any":[{"id":"color-contrast","data":{"fgColor":"#70757a","bgColor":"#f2f2f2","contrastRatio":4.15,"fontSize":"10.5pt (14px)","fontWeight":"normal","messageKey":null,"expectedContrastRatio":"4.5:1"},"relatedNodes":[{"html":"<div class=\"o3j99 c93Gbe\"></div>","target":[".c93Gbe"]}],"impact":"serious","message":"Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}],"all":[],"none":[],"impact":"serious","html":"<a class=\"pHiOh\" href=\"https://www.google.com/intl/en_us/ads/?subid=ww-ww-et-g-awa-a-g_hpafoot1_1!o2&amp;utm_source=google.com&amp;utm_medium=referral&amp;utm_campaign=google_hpafooter&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://www.google.com/intl/en_us/ads/%3Fsubid%3Dww-ww-et-g-awa-a-g_hpafoot1_1!o2%26utm_source%3Dgoogle.com%26utm_medium%3Dreferral%26utm_campaign%3Dgoogle_hpafooter%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQkdQCCA8\"></a>","target":[".AghGtd > .pHiOh:nth-child(1)"],"failureSummary":"Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}]}},"summary":"Elements must have sufficient color contrast","description":"**Description:**\n\tEnsures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1","severity":{"id":"SERIOUS","name":"Serious","newId":"5bd03118-5883-4f43-8831-1544af3afe7c"},"tags":[{"id":"WCAG-1.4.3","description":"1.4.3 Contrast (Minimum)  (Level AA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"},{"id":"WCAG-AA"},{"id":"WCAG2.0"},{"id":"axe-cat.color"},{"id":"axe-wcag143"},{"id":"axe-wcag2aa"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/color-contrast","signature":"bb5dab31"},{"id":"c6a4b6fc-bae0-48fb-8e6b-8956364dd9e5","index":"I4","hidden":false,"validation":{"id":"3b5ef37e-6b58-4041-8a2b-de37eb7ef41d"},"type":{"id":"AXE-COLOR-CONTRAST","newId":"41fbf576-e94e-4a71-ac4d-63f328e3a982","name":"Color-contrast"},"elements":[{"id":"49eee3da-1a0a-4bf1-b050-cc75eb801faa","domSnippet":"<a class=\"pHiOh\" href=\"https://www.google.com/services/?subid=ww-ww-et-g-awa-a-g_hpbfoot1_1!o2&amp;utm_source=google.com&amp;utm_medium=referral&amp;utm_campaign=google_hpbfooter&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://www.google.com/services/%3Fsubid%3Dww-ww-et-g-awa-a-g_hpbfoot1_1!o2%26utm_source%3Dgoogle.com%26utm_medium%3Dreferral%26utm_campaign%3Dgoogle_hpbfooter%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQktQCCBA\">Business</a>","componentId":"4b8ec485","index":"S5","selector":".AghGtd > .pHiOh:nth-child(2)","pageUrl":"https://www.google.com/"},{"id":"acacf057-5155-4248-8c3d-e4c36d6f0318","domSnippet":"<!--NOTE: snippet was trimmed due to its size--><div class=\"o3j99 c93Gbe\"><style>.c93Gbe{background:#f2f2f2}.uU7dJb{padding:15px 30px;border-bottom:1px solid #dadce0;font-size:15px;color:#70757a}.SSwjIe{padding:0 20px}.KxwPGc{display:flex;flex-wrap:wrap;justify-content:space-between}@media only screen and (max-width:1200px){.KxwPGc{justify-content:space-evenly}}.pHiOh{display:block;padding:15px;white-space:nowrap}.pHiOh,a.pHiOh{color:#70757a}.ktLKi{white-space:nowrap;vertical-align:top}.Pb9hCb{height:14px;margin-right:6px}.ssOUyb{order:2}@media only screen and (max-width:1200px){.ssOUyb{order:0;width:100%;justify-content:center}}.waLeGd .ssOUyb{order:0;width:100%;justify-content:center}.AghGtd{justify-content:flex-start;min-width:30%;order:1}.iTjxkf{justify-content:flex-end;min-width:30%;order:3}</style><div jscontroller=\"NzU6V\" class=\"KxwPGc SSwjIe\" data-sfe=\"true\" data-sfsw=\"1200\" jsaction=\"rcuQ6b:npT2md\"><div class=\"KxwPGc AghGtd\"></div></div></div>","componentId":"127c4ce4","index":"S4","selector":".c93Gbe","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"color-contrast","impact":"serious","tags":["cat.color","wcag2aa","wcag143"],"description":"Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","help":"Elements must have sufficient color contrast","nodes":[{"any":[{"id":"color-contrast","data":{"fgColor":"#70757a","bgColor":"#f2f2f2","contrastRatio":4.15,"fontSize":"10.5pt (14px)","fontWeight":"normal","messageKey":null,"expectedContrastRatio":"4.5:1"},"relatedNodes":[{"html":"<div class=\"o3j99 c93Gbe\"></div>","target":[".c93Gbe"]}],"impact":"serious","message":"Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}],"all":[],"none":[],"impact":"serious","html":"<a class=\"pHiOh\" href=\"https://www.google.com/services/?subid=ww-ww-et-g-awa-a-g_hpbfoot1_1!o2&amp;utm_source=google.com&amp;utm_medium=referral&amp;utm_campaign=google_hpbfooter&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://www.google.com/services/%3Fsubid%3Dww-ww-et-g-awa-a-g_hpbfoot1_1!o2%26utm_source%3Dgoogle.com%26utm_medium%3Dreferral%26utm_campaign%3Dgoogle_hpbfooter%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQktQCCBA\"></a>","target":[".AghGtd > .pHiOh:nth-child(2)"],"failureSummary":"Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}]}},"summary":"Elements must have sufficient color contrast","description":"**Description:**\n\tEnsures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1","severity":{"id":"SERIOUS","name":"Serious","newId":"5bd03118-5883-4f43-8831-1544af3afe7c"},"tags":[{"id":"WCAG-1.4.3","description":"1.4.3 Contrast (Minimum)  (Level AA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"},{"id":"WCAG-AA"},{"id":"WCAG2.0"},{"id":"axe-cat.color"},{"id":"axe-wcag143"},{"id":"axe-wcag2aa"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/color-contrast","signature":"e6cd28f4"},{"id":"26910d39-ecb5-4418-921d-1972248fa4df","index":"I5","hidden":false,"validation":{"id":"3e36870e-4d2e-49b1-b5f2-62ad6ddae857"},"type":{"id":"AXE-COLOR-CONTRAST","newId":"41fbf576-e94e-4a71-ac4d-63f328e3a982","name":"Color-contrast"},"elements":[{"id":"60235418-60d4-426c-9e4d-785bdf329da9","domSnippet":"<a class=\"pHiOh\" href=\"https://google.com/search/howsearchworks/?fg=1\"> How Search works </a>","componentId":"4b8ec485","index":"S6","selector":".pHiOh:nth-child(3)","pageUrl":"https://www.google.com/"},{"id":"acacf057-5155-4248-8c3d-e4c36d6f0318","domSnippet":"<!--NOTE: snippet was trimmed due to its size--><div class=\"o3j99 c93Gbe\"><style>.c93Gbe{background:#f2f2f2}.uU7dJb{padding:15px 30px;border-bottom:1px solid #dadce0;font-size:15px;color:#70757a}.SSwjIe{padding:0 20px}.KxwPGc{display:flex;flex-wrap:wrap;justify-content:space-between}@media only screen and (max-width:1200px){.KxwPGc{justify-content:space-evenly}}.pHiOh{display:block;padding:15px;white-space:nowrap}.pHiOh,a.pHiOh{color:#70757a}.ktLKi{white-space:nowrap;vertical-align:top}.Pb9hCb{height:14px;margin-right:6px}.ssOUyb{order:2}@media only screen and (max-width:1200px){.ssOUyb{order:0;width:100%;justify-content:center}}.waLeGd .ssOUyb{order:0;width:100%;justify-content:center}.AghGtd{justify-content:flex-start;min-width:30%;order:1}.iTjxkf{justify-content:flex-end;min-width:30%;order:3}</style><div jscontroller=\"NzU6V\" class=\"KxwPGc SSwjIe\" data-sfe=\"true\" data-sfsw=\"1200\" jsaction=\"rcuQ6b:npT2md\"><div class=\"KxwPGc AghGtd\"></div></div></div>","componentId":"127c4ce4","index":"S4","selector":".c93Gbe","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"color-contrast","impact":"serious","tags":["cat.color","wcag2aa","wcag143"],"description":"Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","help":"Elements must have sufficient color contrast","nodes":[{"any":[{"id":"color-contrast","data":{"fgColor":"#70757a","bgColor":"#f2f2f2","contrastRatio":4.15,"fontSize":"10.5pt (14px)","fontWeight":"normal","messageKey":null,"expectedContrastRatio":"4.5:1"},"relatedNodes":[{"html":"<div class=\"o3j99 c93Gbe\"></div>","target":[".c93Gbe"]}],"impact":"serious","message":"Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}],"all":[],"none":[],"impact":"serious","html":"<a class=\"pHiOh\" href=\"https://google.com/search/howsearchworks/?fg=1\"> How Search works </a>","target":[".pHiOh:nth-child(3)"],"failureSummary":"Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}]}},"summary":"Elements must have sufficient color contrast","description":"**Description:**\n\tEnsures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1","severity":{"id":"SERIOUS","name":"Serious","newId":"5bd03118-5883-4f43-8831-1544af3afe7c"},"tags":[{"id":"WCAG-1.4.3","description":"1.4.3 Contrast (Minimum)  (Level AA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"},{"id":"WCAG-AA"},{"id":"WCAG2.0"},{"id":"axe-cat.color"},{"id":"axe-wcag143"},{"id":"axe-wcag2aa"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/color-contrast","signature":"4b96dc90"},{"id":"fa75765a-59c2-4735-83ee-78fec512d9df","index":"I6","hidden":false,"validation":{"id":"c68c0711-e608-4f9d-b114-3a17862eba8e"},"type":{"id":"AXE-COLOR-CONTRAST","newId":"41fbf576-e94e-4a71-ac4d-63f328e3a982","name":"Color-contrast"},"elements":[{"id":"d9eabe9b-0ce0-4b54-9e31-f9382eb95ef1","domSnippet":"<span class=\"ktLKi\">Carbon neutral since 2007</span>","componentId":"f72979d6","index":"S7","selector":".ktLKi","pageUrl":"https://www.google.com/"},{"id":"acacf057-5155-4248-8c3d-e4c36d6f0318","domSnippet":"<!--NOTE: snippet was trimmed due to its size--><div class=\"o3j99 c93Gbe\"><style>.c93Gbe{background:#f2f2f2}.uU7dJb{padding:15px 30px;border-bottom:1px solid #dadce0;font-size:15px;color:#70757a}.SSwjIe{padding:0 20px}.KxwPGc{display:flex;flex-wrap:wrap;justify-content:space-between}@media only screen and (max-width:1200px){.KxwPGc{justify-content:space-evenly}}.pHiOh{display:block;padding:15px;white-space:nowrap}.pHiOh,a.pHiOh{color:#70757a}.ktLKi{white-space:nowrap;vertical-align:top}.Pb9hCb{height:14px;margin-right:6px}.ssOUyb{order:2}@media only screen and (max-width:1200px){.ssOUyb{order:0;width:100%;justify-content:center}}.waLeGd .ssOUyb{order:0;width:100%;justify-content:center}.AghGtd{justify-content:flex-start;min-width:30%;order:1}.iTjxkf{justify-content:flex-end;min-width:30%;order:3}</style><div jscontroller=\"NzU6V\" class=\"KxwPGc SSwjIe\" data-sfe=\"true\" data-sfsw=\"1200\" jsaction=\"rcuQ6b:npT2md\"><div class=\"KxwPGc AghGtd\"></div></div></div>","componentId":"127c4ce4","index":"S4","selector":".c93Gbe","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"color-contrast","impact":"serious","tags":["cat.color","wcag2aa","wcag143"],"description":"Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","help":"Elements must have sufficient color contrast","nodes":[{"any":[{"id":"color-contrast","data":{"fgColor":"#70757a","bgColor":"#f2f2f2","contrastRatio":4.15,"fontSize":"10.5pt (14px)","fontWeight":"normal","messageKey":null,"expectedContrastRatio":"4.5:1"},"relatedNodes":[{"html":"<div class=\"o3j99 c93Gbe\"></div>","target":[".c93Gbe"]}],"impact":"serious","message":"Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}],"all":[],"none":[],"impact":"serious","html":"<span class=\"ktLKi\">Carbon neutral since 2007</span>","target":[".ktLKi"],"failureSummary":"Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}]}},"summary":"Elements must have sufficient color contrast","description":"**Description:**\n\tEnsures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1","severity":{"id":"SERIOUS","name":"Serious","newId":"5bd03118-5883-4f43-8831-1544af3afe7c"},"tags":[{"id":"WCAG-1.4.3","description":"1.4.3 Contrast (Minimum)  (Level AA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"},{"id":"WCAG-AA"},{"id":"WCAG2.0"},{"id":"axe-cat.color"},{"id":"axe-wcag143"},{"id":"axe-wcag2aa"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/color-contrast","signature":"fb820e2e"},{"id":"c007b800-76df-422c-8d09-41c4fb999dd7","index":"I7","hidden":false,"validation":{"id":"9c10a298-a68b-4a6b-8c4e-cb4f52f3c321"},"type":{"id":"AXE-COLOR-CONTRAST","newId":"41fbf576-e94e-4a71-ac4d-63f328e3a982","name":"Color-contrast"},"elements":[{"id":"8f5bced4-82b2-4653-a68f-d7bb00f0b3af","domSnippet":"<a class=\"pHiOh\" href=\"https://policies.google.com/privacy?hl=en&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://policies.google.com/privacy%3Fhl%3Den%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQ8awCCBI\">Privacy</a>","componentId":"4b8ec485","index":"S8","selector":".iTjxkf > .pHiOh:nth-child(1)","pageUrl":"https://www.google.com/"},{"id":"acacf057-5155-4248-8c3d-e4c36d6f0318","domSnippet":"<!--NOTE: snippet was trimmed due to its size--><div class=\"o3j99 c93Gbe\"><style>.c93Gbe{background:#f2f2f2}.uU7dJb{padding:15px 30px;border-bottom:1px solid #dadce0;font-size:15px;color:#70757a}.SSwjIe{padding:0 20px}.KxwPGc{display:flex;flex-wrap:wrap;justify-content:space-between}@media only screen and (max-width:1200px){.KxwPGc{justify-content:space-evenly}}.pHiOh{display:block;padding:15px;white-space:nowrap}.pHiOh,a.pHiOh{color:#70757a}.ktLKi{white-space:nowrap;vertical-align:top}.Pb9hCb{height:14px;margin-right:6px}.ssOUyb{order:2}@media only screen and (max-width:1200px){.ssOUyb{order:0;width:100%;justify-content:center}}.waLeGd .ssOUyb{order:0;width:100%;justify-content:center}.AghGtd{justify-content:flex-start;min-width:30%;order:1}.iTjxkf{justify-content:flex-end;min-width:30%;order:3}</style><div jscontroller=\"NzU6V\" class=\"KxwPGc SSwjIe\" data-sfe=\"true\" data-sfsw=\"1200\" jsaction=\"rcuQ6b:npT2md\"><div class=\"KxwPGc AghGtd\"></div></div></div>","componentId":"127c4ce4","index":"S4","selector":".c93Gbe","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"color-contrast","impact":"serious","tags":["cat.color","wcag2aa","wcag143"],"description":"Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","help":"Elements must have sufficient color contrast","nodes":[{"any":[{"id":"color-contrast","data":{"fgColor":"#70757a","bgColor":"#f2f2f2","contrastRatio":4.15,"fontSize":"10.5pt (14px)","fontWeight":"normal","messageKey":null,"expectedContrastRatio":"4.5:1"},"relatedNodes":[{"html":"<div class=\"o3j99 c93Gbe\"></div>","target":[".c93Gbe"]}],"impact":"serious","message":"Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}],"all":[],"none":[],"impact":"serious","html":"<a class=\"pHiOh\" href=\"https://policies.google.com/privacy?hl=en&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://policies.google.com/privacy%3Fhl%3Den%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQ8awCCBI\">Privacy</a>","target":[".iTjxkf > .pHiOh:nth-child(1)"],"failureSummary":"Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}]}},"summary":"Elements must have sufficient color contrast","description":"**Description:**\n\tEnsures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1","severity":{"id":"SERIOUS","name":"Serious","newId":"5bd03118-5883-4f43-8831-1544af3afe7c"},"tags":[{"id":"WCAG-1.4.3","description":"1.4.3 Contrast (Minimum)  (Level AA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"},{"id":"WCAG-AA"},{"id":"WCAG2.0"},{"id":"axe-cat.color"},{"id":"axe-wcag143"},{"id":"axe-wcag2aa"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/color-contrast","signature":"5e2420d0"},{"id":"f5411367-f6b6-440a-9452-4d420636b842","index":"I8","hidden":false,"validation":{"id":"6c6b8c38-6c96-469d-9ca2-93afd0f0b688"},"type":{"id":"AXE-COLOR-CONTRAST","newId":"41fbf576-e94e-4a71-ac4d-63f328e3a982","name":"Color-contrast"},"elements":[{"id":"b04e6217-9d94-4c4e-be0b-5ce36eb05bfe","domSnippet":"<a class=\"pHiOh\" href=\"https://policies.google.com/terms?hl=en&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://policies.google.com/terms%3Fhl%3Den%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQ8qwCCBM\">Terms</a>","componentId":"4b8ec485","index":"S9","selector":".iTjxkf > .pHiOh:nth-child(2)","pageUrl":"https://www.google.com/"},{"id":"acacf057-5155-4248-8c3d-e4c36d6f0318","domSnippet":"<!--NOTE: snippet was trimmed due to its size--><div class=\"o3j99 c93Gbe\"><style>.c93Gbe{background:#f2f2f2}.uU7dJb{padding:15px 30px;border-bottom:1px solid #dadce0;font-size:15px;color:#70757a}.SSwjIe{padding:0 20px}.KxwPGc{display:flex;flex-wrap:wrap;justify-content:space-between}@media only screen and (max-width:1200px){.KxwPGc{justify-content:space-evenly}}.pHiOh{display:block;padding:15px;white-space:nowrap}.pHiOh,a.pHiOh{color:#70757a}.ktLKi{white-space:nowrap;vertical-align:top}.Pb9hCb{height:14px;margin-right:6px}.ssOUyb{order:2}@media only screen and (max-width:1200px){.ssOUyb{order:0;width:100%;justify-content:center}}.waLeGd .ssOUyb{order:0;width:100%;justify-content:center}.AghGtd{justify-content:flex-start;min-width:30%;order:1}.iTjxkf{justify-content:flex-end;min-width:30%;order:3}</style><div jscontroller=\"NzU6V\" class=\"KxwPGc SSwjIe\" data-sfe=\"true\" data-sfsw=\"1200\" jsaction=\"rcuQ6b:npT2md\"><div class=\"KxwPGc AghGtd\"></div></div></div>","componentId":"127c4ce4","index":"S4","selector":".c93Gbe","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"color-contrast","impact":"serious","tags":["cat.color","wcag2aa","wcag143"],"description":"Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","help":"Elements must have sufficient color contrast","nodes":[{"any":[{"id":"color-contrast","data":{"fgColor":"#70757a","bgColor":"#f2f2f2","contrastRatio":4.15,"fontSize":"10.5pt (14px)","fontWeight":"normal","messageKey":null,"expectedContrastRatio":"4.5:1"},"relatedNodes":[{"html":"<div class=\"o3j99 c93Gbe\"></div>","target":[".c93Gbe"]}],"impact":"serious","message":"Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}],"all":[],"none":[],"impact":"serious","html":"<a class=\"pHiOh\" href=\"https://policies.google.com/terms?hl=en&amp;fg=1\" ping=\"/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://policies.google.com/terms%3Fhl%3Den%26fg%3D1&amp;ved=0ahUKEwig5sfOzdj4AhXwk4kEHQvMDawQ8qwCCBM\">Terms</a>","target":[".iTjxkf > .pHiOh:nth-child(2)"],"failureSummary":"Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}]}},"summary":"Elements must have sufficient color contrast","description":"**Description:**\n\tEnsures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1","severity":{"id":"SERIOUS","name":"Serious","newId":"5bd03118-5883-4f43-8831-1544af3afe7c"},"tags":[{"id":"WCAG-1.4.3","description":"1.4.3 Contrast (Minimum)  (Level AA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"},{"id":"WCAG-AA"},{"id":"WCAG2.0"},{"id":"axe-cat.color"},{"id":"axe-wcag143"},{"id":"axe-wcag2aa"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/color-contrast","signature":"be1c692b"},{"id":"c03c780a-7808-4b8d-a852-3cf87d4246ba","index":"I9","hidden":false,"validation":{"id":"197bdc61-5e65-4e86-a6cc-920777c915bd"},"type":{"id":"AXE-COLOR-CONTRAST","newId":"41fbf576-e94e-4a71-ac4d-63f328e3a982","name":"Color-contrast"},"elements":[{"id":"01917237-4dcb-4132-9bb3-d7d9e31c044d","domSnippet":"<div jsname=\"LgbsSe\" class=\"ayzqOc pHiOh\" aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\" aria-haspopup=\"true\">Settings</div>","componentId":"5a6dd63e","index":"S2","selector":".ayzqOc","pageUrl":"https://www.google.com/"},{"id":"acacf057-5155-4248-8c3d-e4c36d6f0318","domSnippet":"<!--NOTE: snippet was trimmed due to its size--><div class=\"o3j99 c93Gbe\"><style>.c93Gbe{background:#f2f2f2}.uU7dJb{padding:15px 30px;border-bottom:1px solid #dadce0;font-size:15px;color:#70757a}.SSwjIe{padding:0 20px}.KxwPGc{display:flex;flex-wrap:wrap;justify-content:space-between}@media only screen and (max-width:1200px){.KxwPGc{justify-content:space-evenly}}.pHiOh{display:block;padding:15px;white-space:nowrap}.pHiOh,a.pHiOh{color:#70757a}.ktLKi{white-space:nowrap;vertical-align:top}.Pb9hCb{height:14px;margin-right:6px}.ssOUyb{order:2}@media only screen and (max-width:1200px){.ssOUyb{order:0;width:100%;justify-content:center}}.waLeGd .ssOUyb{order:0;width:100%;justify-content:center}.AghGtd{justify-content:flex-start;min-width:30%;order:1}.iTjxkf{justify-content:flex-end;min-width:30%;order:3}</style><div jscontroller=\"NzU6V\" class=\"KxwPGc SSwjIe\" data-sfe=\"true\" data-sfsw=\"1200\" jsaction=\"rcuQ6b:npT2md\"><div class=\"KxwPGc AghGtd\"></div></div></div>","componentId":"127c4ce4","index":"S4","selector":".c93Gbe","pageUrl":"https://www.google.com/"}],"firstSeenTime":1656709982849,"lastSeenTime":1656709982849,"additionalInformation":{"axeData":{"id":"color-contrast","impact":"serious","tags":["cat.color","wcag2aa","wcag143"],"description":"Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","help":"Elements must have sufficient color contrast","nodes":[{"any":[{"id":"color-contrast","data":{"fgColor":"#70757a","bgColor":"#f2f2f2","contrastRatio":4.15,"fontSize":"10.5pt (14px)","fontWeight":"normal","messageKey":null,"expectedContrastRatio":"4.5:1"},"relatedNodes":[{"html":"<div class=\"o3j99 c93Gbe\"></div>","target":[".c93Gbe"]}],"impact":"serious","message":"Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}],"all":[],"none":[],"impact":"serious","html":"<div jsname=\"LgbsSe\" class=\"ayzqOc pHiOh\" aria-controls=\"_W2O_YuDMGvCnptQPi5i34Ao1\" aria-haspopup=\"true\">Settings</div>","target":[".ayzqOc"],"failureSummary":"Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"}]}},"summary":"Elements must have sufficient color contrast","description":"**Description:**\n\tEnsures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds\n\t**Failure Summary:**\n\tFix at least one (1) of the following\n* Element has insufficient color contrast of 4.15 (foreground color: #70757a, background color: #f2f2f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1","severity":{"id":"SERIOUS","name":"Serious","newId":"5bd03118-5883-4f43-8831-1544af3afe7c"},"tags":[{"id":"WCAG-1.4.3","description":"1.4.3 Contrast (Minimum)  (Level AA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"},{"id":"WCAG-AA"},{"id":"WCAG2.0"},{"id":"axe-cat.color"},{"id":"axe-wcag143"},{"id":"axe-wcag2aa"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/color-contrast","signature":"292f3e8c"}],"reportTimestampSec":1656709982,"sdkVersion":"Cypress SDK 2.4.1"};
+
+    let focusAfterClosed;
+    function openIssueDetailsModal(issue, restoreFocusTo) {
+      focusAfterClosed = restoreFocusTo;
+      const modalBody = document.querySelector("#modalBody div");
+      const newModalBody = document.createElement("div");
+      const url = issue.elements[0].pageUrl;
+      document.getElementById("table").setAttribute("aria-hidden", true);
+
+      newModalBody.innerHTML = `
+            <h2>${issue.type.name}</h2>
+            <p>${issue.summary}</p>
+            <div class="modalComponentItem">
+                URL: <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>
+            </div>
+        `;
+
+      const componentsContainer = document.createElement("div");
+      issue.elements.forEach((el, index) => {
+        componentsContainer.innerHTML += `
+            <div class="modalComponentContainer">
+                <div class="modalComponentItem">
+                    Component: <span class="code">${el.componentId}</span>
+                </div>
+                <div class="modalComponentItem">
+                    Selector: <span class="code">${el.selector}</span>
+                </div>
+                <div class="codeSnippetText code" aria-label="code snippet">${toHtmlEntities(el.domSnippet)}</div>
+            </div>
+          `;
+      });
+
+      newModalBody.appendChild(componentsContainer);
+      modalBody.replaceWith(newModalBody);
+      modalEl.classList.remove("hidden");
+      document.getElementById("issueDetailsModal").focus();
+    }
+
+    function closeIssueDetailsModal() {
+      modalEl.classList.add("hidden");
+      if (focusAfterClosed) {
+        focusAfterClosed.focus();
+      }
+      document.getElementById('table').removeAttribute('aria-hidden', true);
+      focusAfterClosed = null;
+    }
+
+    function toHtmlEntities(string) {
+      return string.replace(/./gm, function (s) {
+        return s.match(/[a-z0-9\s]+/i) ? s : `&#${s.charCodeAt(0)};`;
+      });
+    }
+
+    function formatDate(unix_timestamp) {
+      const date = new Date(unix_timestamp * 1000);
+      return new Intl.DateTimeFormat('en-US', {
+        dateStyle: 'medium',
+        timeStyle: 'medium'
+      }).format(date);
+    }
+
+    function handleEscape(event) {
+      const key = event.which || event.keyCode;
+      if (key === 27 && !modalEl.classList.contains("hidden")) {
+        closeIssueDetailsModal();
+        event.stopPropagation();
+      }
+    }
+
+    function loadTableData(json) {
+      const table = document.getElementById("tableBody");
+      const issuesCount = document.getElementById("issuesCount");
+      const reportTitle = document.getElementById("reportTitle");
+      const pageTitle = document.querySelector("html head title");
+      const sdkVersion = document.getElementById("sdkVersion");
+      issuesCount.innerHTML = `${json.issues.length} ${json.issues.length === 1 ? "Issue" : "Issues"}`;
+      reportTitle.innerHTML = `Accessibility Test Results [${formatDate(json.reportTimestampSec)}]`;
+      pageTitle.innerHTML = `Evinced Accessibility Test Results [${formatDate(json.reportTimestampSec)}]`;
+      sdkVersion.innerHTML = json.sdkVersion || 'Unknown SDK version';
+      json.issues.forEach((issue, issueIdx) => {
+        const showDetails = (e) => openIssueDetailsModal(issue, e.target);
+        const row = table.insertRow();
+
+        // Issue number
+        const numberCell = row.insertCell(0);
+        numberCell.innerHTML = issueIdx + 1;
+
+        // Issue type
+        const issueTypeCell = row.insertCell(1);
+        const issueTypeLink = document.createElement("a");
+        issueTypeLink.href = issue.knowledgeBaseLink;
+        issueTypeLink.target = "_blank";
+        issueTypeLink.rel = "noopener noreferrer";
+        issueTypeLink.innerText = issue.type.name;
+        issueTypeCell.appendChild(issueTypeLink);
+
+        // Severity
+        const severityCell = row.insertCell(2);
+        severityCell.innerHTML = issue.severity.name;
+
+        // URL
+        const urlCell = row.insertCell(3);
+        const pageUrl = issue.elements[0].pageUrl;
+        const linkEl = document.createElement("a");
+        linkEl.innerHTML = pageUrl;
+        linkEl.setAttribute("href", pageUrl);
+        linkEl.setAttribute("title", pageUrl);
+        linkEl.setAttribute("target", "_blank");
+        linkEl.setAttribute("rel", "noopener noreferrer");
+        urlCell.appendChild(linkEl);
+
+        // Components, selectors and code snippets
+        const component = row.insertCell(4);
+        const selector = row.insertCell(5);
+        const codeSnippet = row.insertCell(6);
+
+        const componentUl = document.createElement("ul");
+        const selectorUl = document.createElement("ul");
+        const codeSnippetUl = document.createElement("ul");
+
+        const isMoreThatOneLi = issue.elements.length > 1;
+        issue.elements.forEach((element, index) => {
+          const liComponent = document.createElement("li");
+          const liSelector = document.createElement("li");
+          const liCodeSnippet = document.createElement("li");
+          const pComponent = document.createElement("p");
+          const pSelector = document.createElement("p");
+          const pCodeSnippet = document.createElement("p");
+          pSelector.classList.add("code");
+          pCodeSnippet.classList.add("code");
+          pComponent.innerHTML = element.componentId;
+          pSelector.innerHTML = element.selector;
+          pCodeSnippet.innerHTML = toHtmlEntities(element.domSnippet);
+          pSelector.setAttribute("title", element.selector);
+          pCodeSnippet.setAttribute("title", element.domSnippet);
+          if (!isMoreThatOneLi) {
+            liComponent.style.listStyle = "none";
+            liSelector.style.listStyle = "none";
+            liCodeSnippet.style.listStyle = "none";
+          }
+          liComponent.appendChild(pComponent);
+          liSelector.appendChild(pSelector);
+          liCodeSnippet.appendChild(pCodeSnippet);
+          componentUl.appendChild(liComponent);
+          selectorUl.appendChild(liSelector);
+          codeSnippetUl.appendChild(liCodeSnippet);
+        });
+        component.appendChild(componentUl);
+        selector.appendChild(selectorUl);
+        codeSnippet.appendChild(codeSnippetUl);
+
+        // WCAG tags
+        const wcagCell = row.insertCell(7);
+        const wcagUl = document.createElement("ul");
+        const wcagObject = {};
+        issue.tags.forEach((tag) => {
+          if (tag.description) {
+            wcagObject[tag.id.replace("WCAG-", "")] = tag.link;
+          }
+        });
+        for (const [key, value] of Object.entries(wcagObject)) {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = value;
+          a.innerText = key;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          li.style.listStyle = "none";
+          li.appendChild(a);
+          wcagUl.appendChild(li);
+        }
+        wcagCell.appendChild(wcagUl);
+
+        // Details button
+        const detailsCell = row.insertCell(8);
+        detailsCell.classList.add("detailsCell");
+        const button = document.createElement("button");
+        button.classList.add("clickable");
+        button.setAttribute("aria-label", `open details for issue ${issueIdx + 1}`);
+        button.onclick = showDetails;
+        detailsCell.appendChild(button);
+      });
+    }
+
+    const modalEl = document.getElementById("issueDetailsModal");
+    const container = modalEl.querySelector(".container");
+
+    modalEl.addEventListener("click", function (e) {
+      if (e.target !== modalEl && e.target !== container) return;
+      closeIssueDetailsModal();
+    });
+    document.addEventListener('keyup', handleEscape);
+
+    loadTableData(jsonData);
+  </script>
+</body>
+</html>

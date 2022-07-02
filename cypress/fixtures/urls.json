@@ -1,0 +1,9 @@
+{
+    "env":{
+        "urls":[
+					"https://google.com",
+					"https://www.jpmorgan.com/global",
+					"https://www.nytimes.com/"
+				]
+    }
+}

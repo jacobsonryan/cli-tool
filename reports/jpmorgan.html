@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Evinced Accessibility Report</title>
+  <style>
+    .flexGrow {
+      flex-grow: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .code {
+      font-family: monospace;
+    }
+
+    .clickable {
+      cursor: pointer;
+    }
+    .sr-only {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    html {
+      background-color: #f8f9fa;
+      font-family: "Helvetica", "Arial", sans-serif;
+      font-size: 12px;
+      line-height: 30px;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    #header {
+      background-color: #ffffff;
+      width: 100%;
+      height: 80px;
+      margin-bottom: 40px;
+      color: #131516;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    #logo {
+      height: 20px;
+    }
+
+    #logo img {
+      height: 100%;
+      width: auto;
+      margin: 0 20px;
+    }
+
+    #sdkVersion {
+      margin-right: 20px;
+    }
+
+    #content {
+      overflow-x: auto;
+    }
+
+    #table {
+      max-width: 1220px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border: 2px solid #f1f2f5;
+      border-top: none;
+      border-spacing: 0;
+    }
+
+    #table thead {
+      font-size: 12px;
+      height: 45px;
+      color: #ffffff;
+      background-color: #607085;
+    }
+
+    #issuesCount {
+      font-size: 14px;
+      color: #131516;
+      text-align: left;
+      font-weight: normal;
+      padding: 10px;
+      background-color: #ffffff;
+      border: 2px solid #f1f2f5;
+      border-bottom: none;
+    }
+
+    #table thead .top-row th {
+      text-align: left;
+      color: #ffffff;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+
+    #table thead tr.top-row th:first-of-type {
+      text-transform: capitalize;
+    }
+
+    #table th {
+      border: 1px solid #ffffff;
+    }
+
+    #table .top-row th,
+    #table td {
+      padding: 12px 15px;
+      max-width: 215px;
+    }
+
+    #table tbody tr {
+      width: 100%;
+      height: 50px;
+      border: 2px solid #f1f2f5;
+      border-radius: 3px;
+    }
+
+    .top th {
+      width: 73px;
+      text-align: left;
+      color: #131516;
+      background: #ffffff;
+      font-weight: normal;
+      border: 0;
+      padding: 0 10px;
+      line-height: 30px;
+    }
+
+    table a {
+      color: #131516;
+    }
+
+    #tableBody td {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 14px;
+      line-height: 20px;
+      color: #131516;
+      border-bottom: 1px solid #f1f2f5;
+    }
+
+    ul {
+      padding-inline-start: 0px;
+    }
+
+    ul>li>p {
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    ul>li::marker {
+      color: #8392a6;
+    }
+
+    #issueDetailsModal {
+      background-color: rgba(0, 0, 0, 0.4);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      z-index: 900;
+    }
+
+    #issueDetailsModal:not(.hidden) {
+      display: flex;
+    }
+
+    #issueDetailsModal .container {
+      margin-top: 100px;
+      margin-bottom: 100px;
+      max-width: 900px;
+    }
+
+    #modalBody {
+      background: #ffffff;
+      box-shadow: 0px 5px 10px #888888;
+      display: inline-block;
+      color: #131516;
+      border: 1px solid #8392a6;
+      padding: 30px 50px;
+      font-size: 14px;
+      width: 100%;
+      position: relative;
+    }
+
+    #modalCloseButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      margin: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background-color: transparent;
+    }
+
+    #modalCloseButton:hover {
+      background-color: #f1f2f5;
+    }
+
+    #modalCloseButton img {
+      width: 20px;
+      height: 20px;
+    }
+
+    #issueDetailsModal h2 {
+      color: #00615a;
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    .modalComponentContainer {
+      margin-top: 20px;
+    }
+
+    .modalComponentItem {
+      color: #607085;
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    .modalComponentItem span {
+      color: initial;
+      margin-left: 5px;
+    }
+
+    .modalComponentItem a {
+      color: #0c72bb;
+      margin-left: 5px;
+    }
+
+    .modalComponentContainer .code {
+      font-size: 12px;
+    }
+
+    .codeSnippetText {
+      border: 1px solid #8392a6;
+      background-color: #f8f9fa;
+      width: 100%;
+      padding: 20px;
+      margin-top: 10px;
+      word-break: break-all;
+      box-sizing: border-box;
+    }
+
+    td.detailsCell {
+      width: 44px;
+      padding: 0;
+    }
+
+    td>button {
+      padding: 10px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-image: url("data:image/svg+xml;base64,PHN2ZyBpZD0iaWNvX0luZm8iIGRhdGEtbmFtZT0iaWNvIEluZm8iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMzIgMzIiPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzYiIGRhdGEtbmFtZT0iRWxsaXBzZSAzNiIgY3g9IjE2IiBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjZmZmIi8+CiAgPGNpcmNsZSBpZD0iRWxsaXBzZV8yOSIgZGF0YS1uYW1lPSJFbGxpcHNlIDI5IiBjeD0iOC41IiBjeT0iOC41IiByPSI4LjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuNSA3LjUpIiBmaWxsPSJub25lIiBzdHJva2U9IiM4MzkyYTYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzAiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMCIgY3g9IjEiIGN5PSIxIiByPSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNSAxMikiIGZpbGw9IiM4MzkyYTYiLz4KICA8bGluZSBpZD0iTGluZV82NSIgZGF0YS1uYW1lPSJMaW5lIDY1IiB5Mj0iNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYgMTUuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzgzOTJhNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8L3N2Zz4K");
+      border: none;
+      background-position: center;
+    }
+
+    td>button:hover {
+      border: none;
+      padding: 10px;
+      opacity: 0.6;
+      transition: 0.3s;
+      box-shadow: 0 0 0 0.3em #f1f2f5;
+      background-image: url("data:image/svg+xml;base64,PHN2ZyBpZD0iaWNvX0luZm8iIGRhdGEtbmFtZT0iaWNvIEluZm8iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMzIgMzIiPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzYiIGRhdGEtbmFtZT0iRWxsaXBzZSAzNiIgY3g9IjE2IiBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjZjFmMmY1Ii8+CiAgPHBhdGggaWQ9IlBhdGhfNTEiIGRhdGEtbmFtZT0iUGF0aCA1MSIgZD0iTTguNSwwQTguNSw4LjUsMCwxLDEsMCw4LjUsOC41LDguNSwwLDAsMSw4LjUsMFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuNSA3LjUpIiBmaWxsPSJub25lIiBzdHJva2U9IiMwYzcyYmIiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgaWQ9IkVsbGlwc2VfMzAiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMCIgY3g9IjEiIGN5PSIxIiByPSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNSAxMikiIGZpbGw9IiMwYzcyYmIiLz4KICA8bGluZSBpZD0iTGluZV82NSIgZGF0YS1uYW1lPSJMaW5lIDY1IiB5Mj0iNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYgMTUuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBjNzJiYiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8L3N2Zz4K");
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header">
+    <div id="logo">
+      <img
+        alt="Powered by Evinced"
+        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMC8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+IAo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYwMCA4MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNjAwIDgwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48Zz48cGF0aCBmaWxsPSIjQjJCMkIyIiBkPSJNMjA0LDcyLjhjMC42LDAuNywwLjksMS40LDAuOSwyLjNjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjloLTQwLjIKCQljLTEsMC0xLjctMC4zLTIuNC0wLjljLTAuNi0wLjYtMC45LTEuNC0wLjktMi40VjQuOWMwLTAuOSwwLjMtMS43LDAuOS0yLjRjMC42LTAuNiwxLjQtMC45LDIuNC0wLjloNDAuMmMwLjksMCwxLjcsMC4zLDIuNCwwLjkKCQljMC42LDAuNiwwLjksMS40LDAuOSwyLjRjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjloLTM2LjZ2MjcuNWgzMS43YzAuOSwwLDEuNywwLjMsMi40LDAuOQoJCWMwLjYsMC42LDAuOSwxLjQsMC45LDIuNGMwLDEtMC4zLDEuNy0wLjksMi4zYy0wLjYsMC42LTEuNCwwLjktMi40LDAuOWgtMzEuN3YyOS44aDM2LjZDMjAyLjYsNzEuOSwyMDMuNCw3Mi4yLDIwNCw3Mi44eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik0yNzguMywyLjRjMC43LDAuNiwxLDEuMywxLDIuMWMwLDAuNS0wLjEsMS4xLTAuMywxLjZsLTI5LjMsNjkuOWMtMC4zLDAuNy0wLjcsMS4yLTEuMywxLjYKCQljLTAuNiwwLjQtMS4yLDAuNi0xLjksMC42Yy0wLjcsMC0xLjMtMC4yLTEuOC0wLjVjLTAuNS0wLjQtMS0wLjktMS4zLTEuNUwyMTQuMyw2LjRjLTAuMi0wLjQtMC4zLTEtMC4zLTEuOGMwLTAuOSwwLjMtMS43LDEtMi4zCgkJYzAuNy0wLjYsMS40LTAuOSwyLjItMC45YzEuNSwwLDIuNiwwLjgsMy4zLDIuNEwyNDYuOCw2N2wyNi02My4zYzAuNC0wLjcsMC44LTEuMiwxLjQtMS42YzAuNS0wLjQsMS4xLTAuNiwxLjctMC42CgkJQzI3Ni44LDEuNSwyNzcuNiwxLjgsMjc4LjMsMi40eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik0yOTkuMSw3Ny4zYy0wLjcsMC43LTEuNSwxLTIuNCwxYy0xLDAtMS44LTAuMy0yLjUtMC45Yy0wLjYtMC42LTAuOS0xLjQtMC45LTIuNVY1YzAtMSwwLjMtMS44LDEtMi41CgkJYzAuNy0wLjYsMS41LTAuOSwyLjUtMC45YzAuOSwwLDEuOCwwLjMsMi40LDFjMC43LDAuNywxLDEuNSwxLDIuNHY2OS45QzMwMC4xLDc1LjksMjk5LjgsNzYuNywyOTkuMSw3Ny4zeiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik0zNzkuMSwyLjVjMC41LDAuNiwwLjgsMS4zLDAuOCwyLjJ2NzAuMWMwLDEuMS0wLjMsMi0xLDIuNmMtMC43LDAuNi0xLjUsMC45LTIuNCwwLjljLTAuNSwwLTEtMC4xLTEuNS0wLjMKCQljLTAuNS0wLjItMC45LTAuNS0xLjItMC44bC00Ny02My4zdjYxLjVjMCwwLjgtMC4zLDEuNS0wLjksMi4xYy0wLjYsMC42LTEuMywwLjktMi4xLDAuOWMtMC45LDAtMS42LTAuMy0yLjItMC45CgkJYy0wLjYtMC42LTAuOS0xLjMtMC45LTIuMVY0LjljMC0xLDAuMy0xLjgsMC45LTIuNGMwLjYtMC42LDEuNC0wLjksMi4yLTAuOWMxLjIsMCwyLDAuNCwyLjYsMS4ybDQ3LjIsNjMuN1Y0LjcKCQljMC0wLjksMC4zLTEuNiwwLjktMi4yYzAuNi0wLjYsMS4zLTAuOSwyLjItMC45QzM3Ny44LDEuNiwzNzguNSwxLjksMzc5LjEsMi41eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNCMkIyQjIiIGQ9Ik00NTguMSwxMGMwLDAuNy0wLjMsMS40LTAuOCwyLjJjLTAuNywwLjgtMS41LDEuMi0yLjUsMS4yYy0wLjYsMC0xLjItMC4yLTEuOC0wLjUKCQljLTUuOC0zLjktMTIuMi01LjgtMTkuMi01LjhjLTUuOSwwLTExLjMsMS40LTE2LjEsNC4yYy00LjgsMi44LTguNSw2LjctMTEuMywxMS43Yy0yLjcsNS00LjEsMTAuNy00LjEsMTdjMCw2LjUsMS40LDEyLjMsNC4yLDE3LjMKCQljMi44LDUsNi42LDguOSwxMS4zLDExLjZjNC44LDIuNywxMC4xLDQuMSwxNS45LDQuMWM2LjksMCwxMy4zLTEuOSwxOS4xLTUuN2MwLjYtMC40LDEuMi0wLjUsMS45LTAuNWMxLDAsMS45LDAuNCwyLjUsMS4zCgkJYzAuNSwwLjYsMC44LDEuMywwLjgsMi4xYzAsMS4yLTAuNSwyLTEuNSwyLjZjLTIuOCwxLjktNi40LDMuNS0xMC41LDQuOGMtNC4yLDEuMy04LjIsMS45LTEyLjIsMS45Yy02LjksMC0xMy40LTEuNy0xOS4yLTUKCQljLTUuOS0zLjMtMTAuNi04LTE0LTE0Yy0zLjUtNi01LjItMTIuOC01LjItMjAuNWMwLTcuNCwxLjctMTQuMSw1LjItMjAuMWMzLjQtNiw4LjEtMTAuNywxMy45LTE0LjFjNS44LTMuNCwxMi4zLTUuMSwxOS40LTUuMQoJCWM0LjEsMCw4LjEsMC42LDEyLDEuOGMzLjksMS4yLDcuNCwyLjgsMTAuNiw0LjlDNDU3LjYsOCw0NTguMSw4LjksNDU4LjEsMTB6Ij48L3BhdGg+PHBhdGggZmlsbD0iI0IyQjJCMiIgZD0iTTUxNy45LDcyLjhjMC42LDAuNywwLjksMS40LDAuOSwyLjNjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjloLTQwLjIKCQljLTEsMC0xLjctMC4zLTIuNC0wLjljLTAuNi0wLjYtMC45LTEuNC0wLjktMi40VjQuOWMwLTAuOSwwLjMtMS43LDAuOS0yLjRjMC42LTAuNiwxLjQtMC45LDIuNC0wLjloNDAuMmMwLjksMCwxLjcsMC4zLDIuNCwwLjkKCQljMC42LDAuNiwwLjksMS40LDAuOSwyLjRjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjlINDc5djI3LjVoMzEuN2MwLjksMCwxLjcsMC4zLDIuNCwwLjkKCQljMC42LDAuNiwwLjksMS40LDAuOSwyLjRjMCwxLTAuMywxLjctMC45LDIuM2MtMC42LDAuNi0xLjQsMC45LTIuNCwwLjlINDc5djI5LjhoMzYuNkM1MTYuNSw3MS45LDUxNy4zLDcyLjIsNTE3LjksNzIuOHoiPjwvcGF0aD48cGF0aCBmaWxsPSIjQjJCMkIyIiBkPSJNNTgzLjIsNi44YzQuOCwzLjUsOC40LDguMSwxMC43LDEzLjljMi40LDUuOCwzLjYsMTIuMiwzLjYsMTkuMmMwLDcuMi0xLjIsMTMuNy0zLjYsMTkuNQoJCWMtMi40LDUuOC02LDEwLjQtMTAuNywxMy44Yy00LjgsMy40LTEwLjcsNS4xLTE3LjcsNS4xaC0yNy45Yy0xLDAtMS43LTAuMy0yLjQtMC45Yy0wLjYtMC42LTAuOS0xLjQtMC45LTIuNFY0LjkKCQljMC0wLjksMC4zLTEuNywwLjktMi40YzAuNi0wLjYsMS40LTAuOSwyLjQtMC45aDI3LjlDNTcyLjUsMS42LDU3OC40LDMuMyw1ODMuMiw2Ljh6IE01ODQuMSw2M2M0LjMtNS45LDYuNS0xMy42LDYuNS0yMy4xCgkJYzAtNS45LTAuOS0xMS4zLTIuNy0xNi4xYy0xLjgtNC44LTQuNy04LjYtOC42LTExLjVjLTMuOS0yLjktOC44LTQuMy0xNC43LTQuM2gtMjMuMnY2My44aDIzLjJDNTczLjIsNzEuOSw1NzkuNyw2OC45LDU4NC4xLDYzeiI+PC9wYXRoPjwvZz48cmVjdCB4PSIwIiB5PSIwLjMiIHRyYW5zZm9ybT0ibWF0cml4KC0xIC00LjQ5Njc3MWUtMTEgNC40OTY3NzFlLTExIC0xIDc5LjM2NTEgODApIiBmaWxsPSIjOTk5OTk5IiB3aWR0aD0iNzkuNCIgaGVpZ2h0PSI3OS40Ij48L3JlY3Q+PGNpcmNsZSBmaWxsPSIjRkZGRkZGIiBjeD0iNzkuNCIgY3k9IjQwIiByPSIzOS43Ij48L2NpcmNsZT48cGF0aCBmaWxsPSIjNDVDQUFEIiBkPSJNNzkuNCw3OS43YzIxLjksMCwzOS43LTE3LjgsMzkuNy0zOS43UzEwMS4zLDAuMyw3OS40LDAuMyI+PC9wYXRoPjwvc3ZnPgo=" />
+    </div>
+    <div id="reportTitle"></div>
+    <div class="flexGrow"></div>
+    <div id="sdkVersion"></div>
+  </div>
+
+  <div id="issueDetailsModal" role="dialog" aria-dialog="true" class="hidden" tabindex="0">
+    <div class="container">
+      <div id="modalBody">
+        <button
+          id="modalCloseButton"
+          class="clickable"
+          aria-label="hide details"
+          aria-controls="modalBody"
+          tabindex="0"
+          onclick="closeIssueDetailsModal()"
+        >
+          <img
+            aria-hidden="true"
+            src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMC8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+IAo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiM4MzkyYTYiIGQ9Ik0xOSA2LjQxTDE3LjU5IDUgMTIgMTAuNTkgNi40MSA1IDUgNi40MSAxMC41OSAxMiA1IDE3LjU5IDYuNDEgMTkgMTIgMTMuNDEgMTcuNTkgMTkgMTkgMTcuNTkgMTMuNDEgMTJ6Ij48L3BhdGg+PC9zdmc+Cg==" />
+        </button>
+        <p id="selector"></p>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <table id="table">
+        <caption id="issuesCount" scope="col" colspan="8"></caption>
+      <thead>
+        <tr class="top-row">
+          <th scope="col">
+            <span aria-hidden="true">No.</span>
+            <span class="sr-only">Number</span>
+          </th>
+          <th scope="col">Issue Type</th>
+          <th scope="col">Severity</th>
+          <th scope="col">URL</th>
+          <th scope="col">Component</th>
+          <th scope="col">Selector</th>
+          <th scope="col">Code Snippet</th>
+          <th scope="col">WCAG</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    /*
+    jsonData structure:
+    {
+      reportTimestampSec: number
+      sdkVersion: string
+      issues: [
+        knowledgeBaseLink: string
+        summary: string
+        type: {
+          name: string
+        }
+        severity: {
+          name: string
+        }
+        elements: [
+          pageUrl: string
+          componentId: string
+          selector: string
+          domSnippet: string
+        ]
+        tags: [
+          id: string
+          link: string
+        ]
+      ]
+    }
+    */
+    const jsonData = {"issues":[{"id":"db379162-1a68-4ba5-afed-13cbfa132d4d","index":"I1","hidden":false,"validation":{"id":"3a22ee60-c4da-42c2-8de7-6adff55c650a"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"c34e1d2c-ba81-42f4-a65b-a3754157f33e","domSnippet":"<li data-target=\"#jpmc-carousel-1656693474173\" data-slide-to=\"0\" class=\"active\" tabindex=\"0\" aria-live=\"assertive\"><span class=\"sr-only\">Viewing slide 1 of 7</span></li>","componentId":"0d627771","index":"S1","selector":"li[data-slide-to=\"\\30 \"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"49115f53"},{"id":"d41526e2-ab47-4dfa-8e0c-47e1b683baf1","index":"I2","hidden":false,"validation":{"id":"cb4433a6-e7c3-494a-8266-7c8be431f287"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"19c0e6a6-7bd3-4d7c-9eda-bf6832d5fd47","domSnippet":"<li data-target=\"#jpmc-carousel-1656693474173\" data-slide-to=\"1\" tabindex=\"0\"><span class=\"sr-only\">Go to slide 2 of 7</span></li>","componentId":"00d7092e","index":"S2","selector":"li[data-slide-to=\"\\31 \"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"804b55ce"},{"id":"66d523f0-b50e-4bf1-8349-d795d13d1a3e","index":"I3","hidden":false,"validation":{"id":"e2c1b077-b0f8-404c-a16e-825296c3469a"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"bd01a062-e970-4e2a-b79f-66951b382e2f","domSnippet":"<li data-target=\"#jpmc-carousel-1656693474173\" data-slide-to=\"2\" tabindex=\"0\"><span class=\"sr-only\">Go to slide 3 of 7</span></li>","componentId":"00d7092e","index":"S3","selector":"li[data-slide-to=\"\\32 \"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"126fc35d"},{"id":"97576968-7931-4804-bedb-043ffaf63980","index":"I4","hidden":false,"validation":{"id":"b6bca95f-5e63-4491-8fe8-e0fae6e9b2c8"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"132d7563-c23a-482e-9e2c-348321415362","domSnippet":"<li data-target=\"#jpmc-carousel-1656693474173\" data-slide-to=\"3\" tabindex=\"0\"><span class=\"sr-only\">Go to slide 4 of 7</span></li>","componentId":"00d7092e","index":"S4","selector":"li[data-slide-to=\"\\33 \"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"c7fd3f40"},{"id":"198a3644-f748-4d44-915c-bf3422c9573a","index":"I5","hidden":false,"validation":{"id":"e3d33ba0-86c3-400e-9100-699715fe37a2"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"9095ae24-4d69-4997-965d-50e66e635282","domSnippet":"<li data-target=\"#jpmc-carousel-1656693474173\" data-slide-to=\"4\" tabindex=\"0\"><span class=\"sr-only\">Go to slide 5 of 7</span></li>","componentId":"00d7092e","index":"S5","selector":"li[data-slide-to=\"\\34 \"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"9fc1ee97"},{"id":"2a648334-1b26-48c3-9415-96134cac0201","index":"I6","hidden":false,"validation":{"id":"349ec656-9c00-4425-a534-a3864209fbed"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"95dcac6f-80ab-424c-ae65-f4b8efbae6e6","domSnippet":"<li data-target=\"#jpmc-carousel-1656693474173\" data-slide-to=\"5\" tabindex=\"0\"><span class=\"sr-only\">Go to slide 6 of 7</span></li>","componentId":"00d7092e","index":"S6","selector":"li[data-slide-to=\"\\35 \"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"5e8cab92"},{"id":"79ee2812-728d-44ba-8a3a-dd2dd1b2520a","index":"I7","hidden":false,"validation":{"id":"2b3b7591-d262-4472-8950-88f0cbeed5d5"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"7644dfd4-5a38-4fec-a013-e38cbff8326f","domSnippet":"<li data-target=\"#jpmc-carousel-1656693474173\" data-slide-to=\"6\" tabindex=\"0\"><span class=\"sr-only\">Go to slide 7 of 7</span></li>","componentId":"00d7092e","index":"S7","selector":"li[data-slide-to=\"\\36 \"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"692052a1"},{"id":"42191789-e96d-45cf-94f8-28259b7e3821","index":"I8","hidden":false,"validation":{"id":"0df848ff-3682-4ef3-ad9d-94229b0097c8"},"type":{"id":"WRONG_SEMANTIC_ROLE","newId":"86649b9b-96e1-4abb-903a-5ec30f0af526","name":"Interactable Role"},"elements":[{"id":"94d2f778-5eb5-4d29-98ab-78fed0b9f04d","domSnippet":"<a target=\"_self\" class=\"primary link   \"><span>Visit Our Websites From Around The World</span>\n                                    \n                                </a>","componentId":"0bea822a","index":"S8","selector":".copy-wrap > .content > .cta > .link.primary[target=\"_self\"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Screen readers do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent screen readers from interpreting an element as interactable.  \n**Effect:** Screen reader either does not navigate to the element or navigates to it but does not correctly convey its function to the user.  \n**Suggested Solutions:**\n* Change the element's tag to correctly reflect its type, ie: <*button*>, <*a*> or <*input*><*/input*>  \n* Add attributes (ARIA) to indicate the element's type and/or potential functionalities.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-1.3.1","description":"1.3.1 Info and Relationships  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","signature":"f2648372"},{"id":"5e3b430b-d46d-4eb4-bca5-6c185eb50fa9","index":"I9","hidden":false,"validation":{"id":"1f3e2815-5f22-41be-a2a1-2370b5029717"},"type":{"id":"NOT_FOCUSABLE","newId":"724b3853-33d3-47b9-80bd-2401abcd5ad4","name":"Keyboard Accessible"},"elements":[{"id":"94d2f778-5eb5-4d29-98ab-78fed0b9f04d","domSnippet":"<a target=\"_self\" class=\"primary link   \"><span>Visit Our Websites From Around The World</span>\n                                    \n                                </a>","componentId":"0bea822a","index":"S8","selector":".copy-wrap > .content > .cta > .link.primary[target=\"_self\"]","pageUrl":"https://www.jpmorgan.com/global"}],"firstSeenTime":1656709992876,"lastSeenTime":1656709992876,"additionalInformation":{},"summary":"Keyboard-only users do not interpret the element as interactable.","description":"**Cause:** Missing or incorrect semantics prevent the keyboard User-Agent from interpreting an element as interactable.  \n**Effect:** Interface interaction is limited for keyboard-only users.  \n**Suggested Solutions:**\n* (Recommended) Add an element that better reflects the element's purpose. Interactive elements do not need any additions because they are focusable by nature. \n* Add a *tabindex* attribute with the value of “0” to the element.  \n","severity":{"id":"CRITICAL","name":"Critical","newId":"3c68eb41-9227-481d-8eec-9dc8956b19c4"},"tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","signature":"390910b1"}],"reportTimestampSec":1656709992,"sdkVersion":"Cypress SDK 2.4.1"};
+
+    let focusAfterClosed;
+    function openIssueDetailsModal(issue, restoreFocusTo) {
+      focusAfterClosed = restoreFocusTo;
+      const modalBody = document.querySelector("#modalBody div");
+      const newModalBody = document.createElement("div");
+      const url = issue.elements[0].pageUrl;
+      document.getElementById("table").setAttribute("aria-hidden", true);
+
+      newModalBody.innerHTML = `
+            <h2>${issue.type.name}</h2>
+            <p>${issue.summary}</p>
+            <div class="modalComponentItem">
+                URL: <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>
+            </div>
+        `;
+
+      const componentsContainer = document.createElement("div");
+      issue.elements.forEach((el, index) => {
+        componentsContainer.innerHTML += `
+            <div class="modalComponentContainer">
+                <div class="modalComponentItem">
+                    Component: <span class="code">${el.componentId}</span>
+                </div>
+                <div class="modalComponentItem">
+                    Selector: <span class="code">${el.selector}</span>
+                </div>
+                <div class="codeSnippetText code" aria-label="code snippet">${toHtmlEntities(el.domSnippet)}</div>
+            </div>
+          `;
+      });
+
+      newModalBody.appendChild(componentsContainer);
+      modalBody.replaceWith(newModalBody);
+      modalEl.classList.remove("hidden");
+      document.getElementById("issueDetailsModal").focus();
+    }
+
+    function closeIssueDetailsModal() {
+      modalEl.classList.add("hidden");
+      if (focusAfterClosed) {
+        focusAfterClosed.focus();
+      }
+      document.getElementById('table').removeAttribute('aria-hidden', true);
+      focusAfterClosed = null;
+    }
+
+    function toHtmlEntities(string) {
+      return string.replace(/./gm, function (s) {
+        return s.match(/[a-z0-9\s]+/i) ? s : `&#${s.charCodeAt(0)};`;
+      });
+    }
+
+    function formatDate(unix_timestamp) {
+      const date = new Date(unix_timestamp * 1000);
+      return new Intl.DateTimeFormat('en-US', {
+        dateStyle: 'medium',
+        timeStyle: 'medium'
+      }).format(date);
+    }
+
+    function handleEscape(event) {
+      const key = event.which || event.keyCode;
+      if (key === 27 && !modalEl.classList.contains("hidden")) {
+        closeIssueDetailsModal();
+        event.stopPropagation();
+      }
+    }
+
+    function loadTableData(json) {
+      const table = document.getElementById("tableBody");
+      const issuesCount = document.getElementById("issuesCount");
+      const reportTitle = document.getElementById("reportTitle");
+      const pageTitle = document.querySelector("html head title");
+      const sdkVersion = document.getElementById("sdkVersion");
+      issuesCount.innerHTML = `${json.issues.length} ${json.issues.length === 1 ? "Issue" : "Issues"}`;
+      reportTitle.innerHTML = `Accessibility Test Results [${formatDate(json.reportTimestampSec)}]`;
+      pageTitle.innerHTML = `Evinced Accessibility Test Results [${formatDate(json.reportTimestampSec)}]`;
+      sdkVersion.innerHTML = json.sdkVersion || 'Unknown SDK version';
+      json.issues.forEach((issue, issueIdx) => {
+        const showDetails = (e) => openIssueDetailsModal(issue, e.target);
+        const row = table.insertRow();
+
+        // Issue number
+        const numberCell = row.insertCell(0);
+        numberCell.innerHTML = issueIdx + 1;
+
+        // Issue type
+        const issueTypeCell = row.insertCell(1);
+        const issueTypeLink = document.createElement("a");
+        issueTypeLink.href = issue.knowledgeBaseLink;
+        issueTypeLink.target = "_blank";
+        issueTypeLink.rel = "noopener noreferrer";
+        issueTypeLink.innerText = issue.type.name;
+        issueTypeCell.appendChild(issueTypeLink);
+
+        // Severity
+        const severityCell = row.insertCell(2);
+        severityCell.innerHTML = issue.severity.name;
+
+        // URL
+        const urlCell = row.insertCell(3);
+        const pageUrl = issue.elements[0].pageUrl;
+        const linkEl = document.createElement("a");
+        linkEl.innerHTML = pageUrl;
+        linkEl.setAttribute("href", pageUrl);
+        linkEl.setAttribute("title", pageUrl);
+        linkEl.setAttribute("target", "_blank");
+        linkEl.setAttribute("rel", "noopener noreferrer");
+        urlCell.appendChild(linkEl);
+
+        // Components, selectors and code snippets
+        const component = row.insertCell(4);
+        const selector = row.insertCell(5);
+        const codeSnippet = row.insertCell(6);
+
+        const componentUl = document.createElement("ul");
+        const selectorUl = document.createElement("ul");
+        const codeSnippetUl = document.createElement("ul");
+
+        const isMoreThatOneLi = issue.elements.length > 1;
+        issue.elements.forEach((element, index) => {
+          const liComponent = document.createElement("li");
+          const liSelector = document.createElement("li");
+          const liCodeSnippet = document.createElement("li");
+          const pComponent = document.createElement("p");
+          const pSelector = document.createElement("p");
+          const pCodeSnippet = document.createElement("p");
+          pSelector.classList.add("code");
+          pCodeSnippet.classList.add("code");
+          pComponent.innerHTML = element.componentId;
+          pSelector.innerHTML = element.selector;
+          pCodeSnippet.innerHTML = toHtmlEntities(element.domSnippet);
+          pSelector.setAttribute("title", element.selector);
+          pCodeSnippet.setAttribute("title", element.domSnippet);
+          if (!isMoreThatOneLi) {
+            liComponent.style.listStyle = "none";
+            liSelector.style.listStyle = "none";
+            liCodeSnippet.style.listStyle = "none";
+          }
+          liComponent.appendChild(pComponent);
+          liSelector.appendChild(pSelector);
+          liCodeSnippet.appendChild(pCodeSnippet);
+          componentUl.appendChild(liComponent);
+          selectorUl.appendChild(liSelector);
+          codeSnippetUl.appendChild(liCodeSnippet);
+        });
+        component.appendChild(componentUl);
+        selector.appendChild(selectorUl);
+        codeSnippet.appendChild(codeSnippetUl);
+
+        // WCAG tags
+        const wcagCell = row.insertCell(7);
+        const wcagUl = document.createElement("ul");
+        const wcagObject = {};
+        issue.tags.forEach((tag) => {
+          if (tag.description) {
+            wcagObject[tag.id.replace("WCAG-", "")] = tag.link;
+          }
+        });
+        for (const [key, value] of Object.entries(wcagObject)) {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = value;
+          a.innerText = key;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          li.style.listStyle = "none";
+          li.appendChild(a);
+          wcagUl.appendChild(li);
+        }
+        wcagCell.appendChild(wcagUl);
+
+        // Details button
+        const detailsCell = row.insertCell(8);
+        detailsCell.classList.add("detailsCell");
+        const button = document.createElement("button");
+        button.classList.add("clickable");
+        button.setAttribute("aria-label", `open details for issue ${issueIdx + 1}`);
+        button.onclick = showDetails;
+        detailsCell.appendChild(button);
+      });
+    }
+
+    const modalEl = document.getElementById("issueDetailsModal");
+    const container = modalEl.querySelector(".container");
+
+    modalEl.addEventListener("click", function (e) {
+      if (e.target !== modalEl && e.target !== container) return;
+      closeIssueDetailsModal();
+    });
+    document.addEventListener('keyup', handleEscape);
+
+    loadTableData(jsonData);
+  </script>
+</body>
+</html>
